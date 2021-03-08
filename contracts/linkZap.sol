@@ -24,7 +24,7 @@ contract linkZap is Ownable {
     ICurveFi public pool =
         ICurveFi(address(0x2dded6Da1BF5DBdF597C45fcFaa3194e53EcfeAF)); // Curve Iron Bank Pool
     IYVault public yVault =
-        IYVault(address(0x96Ea6AF74Af09522fCB4c28C269C26F59a31ced6)); // add address here when deployed
+        IYVault(address(0x96Ea6AF74Af09522fCB4c28C269C26F59a31ced6)); // Curve LINK Pool yVault
 
     IERC20 public want =
         IERC20(address(0xcee60cFa923170e4f8204AE08B4fA6A3F5656F3a)); // LINK pool curve LP Token
