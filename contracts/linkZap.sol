@@ -34,11 +34,6 @@ contract linkZap is Ownable {
         link.safeApprove(address(pool), uint256(-1));
     }
 
-    function name() external view override returns (string memory) {
-        // Add your own name here, suggestion e.g. "StrategyCreamYFI"
-        return "Curve LINK Vault Zap";
-    }
-
     function zapLink() external {
         uint256 linkBalance = link.balanceOf(msg.sender);
         require(linkBalance != 0, "0 LINK");
