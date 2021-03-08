@@ -12,7 +12,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./interfaces/curve.sol";
 
-
 interface IYVault is IERC20 {
     function deposit(uint256 amount, address recipient) external;
 }
@@ -22,11 +21,15 @@ contract linkZap is Ownable {
     using Address for address;
     using SafeMath for uint256;
 
-    ICurveFi public pool = ICurveFi(address(0x2dded6Da1BF5DBdF597C45fcFaa3194e53EcfeAF)); // Curve Iron Bank Pool
-    IYVault public yVault = IYVault(address(0x96Ea6AF74Af09522fCB4c28C269C26F59a31ced6)); // add address here when deployed
+    ICurveFi public pool =
+        ICurveFi(address(0x2dded6Da1BF5DBdF597C45fcFaa3194e53EcfeAF)); // Curve Iron Bank Pool
+    IYVault public yVault =
+        IYVault(address(0x96Ea6AF74Af09522fCB4c28C269C26F59a31ced6)); // add address here when deployed
 
-    IERC20 public want = IERC20(address(0xcee60cFa923170e4f8204AE08B4fA6A3F5656F3a)); // LINK pool curve LP Token
-    IERC20 public link = IERC20(address(0x514910771AF9Ca656af840dff83E8264EcF986CA));
+    IERC20 public want =
+        IERC20(address(0xcee60cFa923170e4f8204AE08B4fA6A3F5656F3a)); // LINK pool curve LP Token
+    IERC20 public link =
+        IERC20(address(0x514910771AF9Ca656af840dff83E8264EcF986CA));
 
     constructor() public Ownable() {
         want.safeApprove(address(yVault), uint256(-1));
@@ -38,9 +41,7 @@ contract linkZap is Ownable {
         return "Curve LINK Vault Zap";
     }
 
-    function zapLink()
-        external {
-        
+    function zapLink() external {
         uint256 linkBalance = link.balanceOf(msg.sender);
         require(linkBalance != 0, "0 LINK");
 
@@ -54,13 +55,10 @@ contract linkZap is Ownable {
         uint256 curvePoolTokens = want.balanceOf(address(this));
 
         yVault.deposit(curvePoolTokens, msg.sender);
-
-}
-    function updateVaultAddress(address _vault) external onlyOwner {
-      yVault = IYVault(_vault); 
-      want.safeApprove(_vault, uint256(-1));
     }
 
-
-
+    function updateVaultAddress(address _vault) external onlyOwner {
+        yVault = IYVault(_vault);
+        want.safeApprove(_vault, uint256(-1));
+    }
 }
