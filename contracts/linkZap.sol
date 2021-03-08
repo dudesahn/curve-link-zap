@@ -34,14 +34,13 @@ contract linkZap is Ownable {
         link.safeApprove(address(pool), uint256(-1));
     }
 
-    function zapLink() external {
-        uint256 linkBalance = link.balanceOf(msg.sender);
-        require(linkBalance != 0, "0 LINK");
+    function zapLink(uint256 linkAmount) external {
+        require(linkAmount != 0, "0 LINK");
 
-        link.transferFrom(msg.sender, address(this), linkBalance);
+        link.transferFrom(msg.sender, address(this), linkAmount);
 
         uint256 balanceBegin = link.balanceOf(address(this));
-        require(balanceBegin >= linkBalance, "NOT ALL LINK RECEIVED");
+        require(balanceBegin >= linkAmount, "NOT ALL LINK RECEIVED");
 
         pool.add_liquidity([linkBalance, 0], 0);
 
